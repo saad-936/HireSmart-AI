@@ -24,7 +24,6 @@ main = Blueprint("main", __name__)
 # Dashboard
 @main.route("/")
 def home():
-
     connection = get_db()
 
     total_jobs = connection.execute(
@@ -117,10 +116,14 @@ def resume_screening():
                 jobs=jobs_list
             )
 
-        upload_folder = os.path.join(
-            os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
-            "uploads"
-        )
+        # Vercel uses temporary storage; local app uses uploads/
+        if os.getenv("VERCEL"):
+            upload_folder = "/tmp/uploads"
+        else:
+            upload_folder = os.path.join(
+                os.path.dirname(os.path.dirname(os.path.abspath(__file__))),
+                "uploads"
+            )
 
         os.makedirs(upload_folder, exist_ok=True)
 
