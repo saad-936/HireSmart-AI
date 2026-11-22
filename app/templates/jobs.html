@@ -1,0 +1,132 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HireSmart AI | Job Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        .job-form {
+            background: white;
+            padding: 28px;
+            border-radius: 14px;
+            margin-bottom: 30px;
+        }
+        .job-form input, .job-form textarea, .job-form select {
+            width: 100%;
+            padding: 12px;
+            margin: 8px 0 18px;
+            border: 1px solid #dbe1ea;
+            border-radius: 8px;
+            font-size: 15px;
+        }
+        .job-form label { font-weight: 600; }
+        .job-form button {
+            background: #2563eb;
+            color: white;
+            padding: 13px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+        .job-card {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+        .message {
+            padding: 12px;
+            margin-bottom: 15px;
+            background: #dcfce7;
+            border-radius: 8px;
+        }
+        .error { background: #fee2e2; }
+        .job-card p { margin-top: 9px; color: #64748b; }
+    </style>
+</head>
+<body>
+<div class="layout">
+    <aside class="sidebar">
+        <div class="logo">HireSmart<span>AI.</span></div>
+        <p class="nav-title">MAIN MENU</p>
+        <a href="/" class="nav-item">Dashboard</a>
+        <a href="/jobs" class="nav-item active">Job Management</a>
+        <a href="#" class="nav-item">Resume Screening</a>
+        <a href="#" class="nav-item">Candidates</a>
+        <a href="#" class="nav-item">AI Analysis</a>
+        <a href="#" class="nav-item">Settings</a>
+    </aside>
+
+    <main class="main">
+        <header class="topbar">
+            <div>
+                <h1>Job Management</h1>
+                <p>Create and manage recruitment opportunities.</p>
+            </div>
+            <div class="profile">Admin Account</div>
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% for category, message in messages %}
+                <div class="message {{ 'error' if category == 'error' else '' }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endwith %}
+
+        <h2 class="section-title">Create New Job</h2>
+
+        <form class="job-form" method="POST">
+            <label>Job Title *</label>
+            <input type="text" name="title" placeholder="e.g. Python Developer" required>
+
+            <label>Department</label>
+            <input type="text" name="department" placeholder="e.g. Information Technology">
+
+            <label>Location</label>
+            <input type="text" name="location" placeholder="e.g. Lahore, Pakistan">
+
+            <label>Job Type</label>
+            <select name="job_type">
+                <option value="">Select job type</option>
+                <option>Full-time</option>
+                <option>Part-time</option>
+                <option>Internship</option>
+                <option>Remote</option>
+            </select>
+
+            <label>Job Description *</label>
+            <textarea name="description" rows="5" placeholder="Describe the job responsibilities..." required></textarea>
+
+            <label>Required Skills *</label>
+            <textarea name="required_skills" rows="3" placeholder="Python, Flask, SQL, Machine Learning" required></textarea>
+
+            <label>Required Qualification</label>
+            <input type="text" name="qualification" placeholder="e.g. BS Computer Science or equivalent">
+
+            <button type="submit">+ Create Job</button>
+        </form>
+
+        <h2 class="section-title">Posted Jobs ({{ jobs|length }})</h2>
+
+        {% for job in jobs %}
+            <div class="job-card">
+                <h3>{{ job['title'] }}</h3>
+                <p>{{ job['department'] or 'Department not specified' }} |
+                   {{ job['location'] or 'Location not specified' }}</p>
+                <p><strong>Job Type:</strong> {{ job['job_type'] or 'Not specified' }}</p>
+                <p><strong>Skills:</strong> {{ job['required_skills'] }}</p>
+                <p><strong>Qualification:</strong> {{ job['qualification'] or 'Not specified' }}</p>
+                <p>{{ job['description'] }}</p>
+            </div>
+        {% else %}
+            <div class="job-card">
+                No jobs posted yet. Create your first job above.
+            </div>
+        {% endfor %}
+    </main>
+</div>
+</body>
+</html>

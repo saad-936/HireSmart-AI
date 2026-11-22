@@ -1,0 +1,76 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HireSmart AI | Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<div class="layout">
+    <aside class="sidebar">
+        <div class="logo">HireSmart<span>AI.</span></div>
+        <p class="nav-title">MAIN MENU</p>
+
+        <a href="/" class="nav-item active">Dashboard</a>
+        <a href="{{ url_for('main.jobs') }}" class="nav-item">Job Management</a>
+        <a href="{{ url_for('main.resume_screening') }}" class="nav-item">Resume Screening</a>
+        <a href="#" class="nav-item">Candidates</a>
+        <a href="#" class="nav-item">AI Analysis</a>
+        <a href="#" class="nav-item">Settings</a>
+    </aside>
+
+    <main class="main">
+        <header class="topbar">
+            <div>
+                <h1>Dashboard</h1>
+                <p>Welcome to your intelligent recruitment workspace.</p>
+            </div>
+            <div class="profile">Admin Account</div>
+        </header>
+
+        <section class="welcome">
+            <h2>Welcome to HireSmart AI</h2>
+            <p>Transform your recruitment process with Artificial Intelligence.
+            Screen resumes, discover talent and find the right candidates.</p>
+        </section>
+
+        <section class="stats">
+            <div class="stat-card"><p>Total Jobs</p><h3>{{ total_jobs }}</h3></div>
+            <div class="stat-card"><p>Total Candidates</p><h3>0</h3></div>
+            <div class="stat-card"><p>Resumes Screened</p><h3>0</h3></div>
+            <div class="stat-card"><p>Shortlisted</p><h3>0</h3></div>
+        </section>
+
+        <h2 class="section-title">Platform Features</h2>
+
+        <section class="features">
+            <a href="{{ url_for('main.jobs') }}" class="feature-card">
+                <div class="icon">&#128188;</div>
+                <h3>Job Management</h3>
+                <p>Create job listings and define the skills and qualifications required.</p>
+            </a>
+
+            <a href="{{ url_for('main.resume_screening') }}" class="feature-card">
+                <div class="icon">&#128196;</div>
+                <h3>Resume Screening</h3>
+                <p>Upload PDF resumes and extract candidate information automatically.</p>
+            </a>
+
+            <div class="feature-card">
+                <div class="icon">&#129504;</div>
+                <h3>AI Resume Matching</h3>
+                <p>Analyze resume relevance and calculate job compatibility scores.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">&#129302;</div>
+                <h3>Recruitment Agent</h3>
+                <p>Generate skill-gap analysis, interview questions and shortlist suggestions.</p>
+            </div>
+        </section>
+    </main>
+</div>
+</body>
+</html>
